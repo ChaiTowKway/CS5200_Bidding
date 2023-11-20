@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'usedCarBidding',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,7 +90,7 @@ if os.getenv('GAE_APPLICATION', None):
         'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '/cloudsql/neu-cs5200-23fall-group11:us-west1:group11-hello',
-        'NAME': 'UsedCarBiddingSystem',
+        'NAME': 'KhouryUsedCarsBiddingGroup11',
         'USER': 'root',
         'PASSWORD': ''
     }
@@ -98,10 +99,10 @@ else:
     DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'UsedCarBiddingSystem',
+        'NAME': 'KhouryUsedCarsBiddingGroup11',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'HOST': '34.168.124.155',
         'PORT': '3306'}
 }
 

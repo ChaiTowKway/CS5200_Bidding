@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from usedCarBidding import views
 
 urlpatterns = [
     path("", include("usedCarBidding.urls")),

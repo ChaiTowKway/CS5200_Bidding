@@ -3,15 +3,17 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse
 from django.db import connection
-
-
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the bidding index.")
-
-from django.http import HttpResponse
-from django.db import connection
 import os
+
+from .models import User
+def testmysql(request):
+    user = User.objects.all()
+    context = {
+        'user_id': user[0].userid,
+        'user_name': user[0].name,
+        'user_email': user[0].email,
+    }
+    return render(request, 'home.html', context)
 
 def check_db_connection(request):
     try:
@@ -35,7 +37,3 @@ def check_db_connection(request):
         return HttpResponse(response_content)
     except Exception as e:
         return HttpResponse(f"Database connection failed: {str(e)}")
-
-    
-
-    
