@@ -11,17 +11,17 @@ from django.db import models
 class Auction(models.Model):
     auction_id = models.AutoField(db_column='Auction_ID', primary_key=True)  # Field name made lowercase.
     start_time = models.DateTimeField(db_column='Start_Time', blank=True, null=True)  # Field name made lowercase.
-    car = models.ForeignKey('Car', models.DO_NOTHING, db_column='Car_ID', blank=True, null=True)  # Field name made lowercase.
+    car_id = models.ForeignKey('Car', models.DO_NOTHING, db_column='Car_ID', blank=True, null=True)  # Field name made lowercase.
     minimum_price = models.DecimalField(db_column='Minimum_Price', max_digits=10, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     ending_time = models.DateTimeField(db_column='Ending_Time', blank=True, null=True)  # Field name made lowercase.
     additional_info = models.CharField(db_column='Additional_Info', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    winner = models.ForeignKey('User', models.DO_NOTHING, db_column='Winner_id', blank=True, null=True)  # Field name made lowercase.
+    winner_id = models.ForeignKey('User', models.DO_NOTHING, db_column='Winner_id', blank=True, null=True)  # Field name made lowercase.
     minimum_deposit = models.DecimalField(db_column='Minimum_Deposit', max_digits=10, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     auction_hold = models.IntegerField(db_column='Auction_Hold', blank=True, null=True)  # Field name made lowercase.
     auction_status = models.CharField(db_column='Auction_Status', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    is_verified = models.IntegerField(blank=True, null=True)
+    is_verified = models.IntegerField(db_column='is_verified',blank=True, null=True)
     payment_id = models.IntegerField(db_column='Payment_ID', blank=True, null=True)  # Field name made lowercase.
-    shipping = models.ForeignKey('Shipping', models.DO_NOTHING, db_column='Shipping_ID', blank=True, null=True)  # Field name made lowercase.
+    shipping_id = models.ForeignKey('Shipping', models.DO_NOTHING, db_column='Shipping_ID', blank=True, null=True)  # Field name made lowercase.
     edit_time = models.CharField(db_column='Edit_time', max_length=50, blank=True, null=True)  # Field name made lowercase.
     withdrawn = models.CharField(db_column='Withdrawn', max_length=50, blank=True, null=True)  # Field name made lowercase.
 
@@ -31,7 +31,7 @@ class Auction(models.Model):
 
 
 class Bidder(models.Model):
-    bidder = models.OneToOneField('User', models.DO_NOTHING, db_column='Bidder_ID', primary_key=True)  # Field name made lowercase.
+    bidder_id = models.OneToOneField('User', models.DO_NOTHING, db_column='Bidder_ID', primary_key=True)  # Field name made lowercase.
     minimum_deposit = models.DecimalField(db_column='Minimum_Deposit', max_digits=10, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     max_price = models.DecimalField(db_column='Max_Price', max_digits=10, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     auto_bid = models.IntegerField(db_column='Auto_Bid', blank=True, null=True)  # Field name made lowercase.
@@ -44,8 +44,8 @@ class Bidder(models.Model):
 
 class Bidding(models.Model):
     bidding_id = models.AutoField(db_column='Bidding_ID', primary_key=True)  # Field name made lowercase.
-    auction = models.ForeignKey(Auction, models.DO_NOTHING, db_column='Auction_ID', blank=True, null=True)  # Field name made lowercase.
-    bidder = models.ForeignKey('User', models.DO_NOTHING, db_column='Bidder_ID', blank=True, null=True)  # Field name made lowercase.
+    auction_id = models.ForeignKey(Auction, models.DO_NOTHING, db_column='Auction_ID', blank=True, null=True)  # Field name made lowercase.
+    bidder_id = models.ForeignKey('User', models.DO_NOTHING, db_column='Bidder_ID', blank=True, null=True)  # Field name made lowercase.
     bidding_price = models.DecimalField(db_column='Bidding_Price', max_digits=10, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
@@ -67,7 +67,7 @@ class Car(models.Model):
     drivetrain = models.CharField(db_column='Drivetrain', max_length=50, blank=True, null=True)  # Field name made lowercase.
     location = models.CharField(db_column='Location', max_length=100, blank=True, null=True)  # Field name made lowercase.
     current_status = models.CharField(db_column='Current_Status', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    seller = models.ForeignKey('User', models.DO_NOTHING, db_column='Seller_ID', blank=True, null=True)  # Field name made lowercase.
+    seller_id = models.ForeignKey('User', models.DO_NOTHING, db_column='Seller_ID', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         # managed = False
@@ -87,7 +87,7 @@ class Car(models.Model):
 
 class Seller(models.Model):
     userid = models.OneToOneField('User', models.DO_NOTHING, db_column='UserID', primary_key=True)  # Field name made lowercase.
-    first_car_release_date = models.DateField(blank=True, null=True)
+    first_car_release_date = models.DateField(blank=True, null=True, db_column='first_car_release_date')
 
     class Meta:
         # managed = False
