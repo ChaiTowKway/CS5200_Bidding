@@ -93,7 +93,7 @@ def respond(request):
             messages=[
                 {
                     "role": "user",
-                    "content": f"The question from user is {user_input}. If the user requires to update information and there is empty response from {query_result}, reply as update successfully. Otherwise, rephase to this response to human languange:\n\n{query_result}\n\n",
+                    "content": f"The question from user is {user_input}. Rephase to this response to human languange:\n\n{query_result}\n\n",
                 }
             ],
             model="gpt-3.5-turbo",
