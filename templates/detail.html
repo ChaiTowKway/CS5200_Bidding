@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Car Info</title>
+</head>
+
+<body>
+    <h1>Car Info</h1>
+    {% for car in data1 %}
+    <h2>Car_ID: {{ car.0 }}</h2>
+    <h2>Body_Style: {{ car.1 }}</h2>
+    <h2>Exterior_Color: {{ car.2 }}</h2>
+    <h2>Transmission: {{ car.3 }}</h2>
+    <h2>Mileage: {{ car.4 }}</h2>
+    <h2>Engine: {{ car.5 }}</h2>
+    <h2>Title_Status: {{ car.6 }}</h2>
+    <h2>Make: {{ car.7 }}</h2>
+    <h2>Model: {{ car.8 }}</h2>
+    <h2>Year: {{ car.9 }}</h2>
+    <h2>Drivetrain: {{ car.10 }}</h2>
+    <h2>Location: {{ car.11 }}</h2>
+    <h2>Current_Status: {{ car.12 }}</h2>
+    <h2>Seller_ID: {{ car.13 }}</h2>
+    {% endfor %}
+
+    {% for Auction_ID, max_price in data2 %}
+    <h1>The highest bidding for this car is: {{max_price}} --- Auction Id: {{Auction_ID}}</h1>
+
+
+    
+    {% endfor %}
+
+    <form action="/bidding">
+
+
+        Place a bid: <input type="text" name="biddingPrice">
+        <!-- Auction<input type="text" name="auctionID"> -->
+        <!-- <input type="submit"> -->
+        <button class="btn">Place a Bid</button>
+
+    </form>
+
+   
+</body>
+</html>
