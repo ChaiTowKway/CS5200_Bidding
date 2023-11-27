@@ -6,22 +6,29 @@
 
 <body>
     <h1>Car Info</h1>
+  <ur>
     {% for car in data1 %}
-    <h2>Car_ID: {{ car.0 }}</h2>
-    <h2>Body_Style: {{ car.1 }}</h2>
-    <h2>Exterior_Color: {{ car.2 }}</h2>
-    <h2>Transmission: {{ car.3 }}</h2>
-    <h2>Mileage: {{ car.4 }}</h2>
-    <h2>Engine: {{ car.5 }}</h2>
-    <h2>Title_Status: {{ car.6 }}</h2>
-    <h2>Make: {{ car.7 }}</h2>
-    <h2>Model: {{ car.8 }}</h2>
-    <h2>Year: {{ car.9 }}</h2>
-    <h2>Drivetrain: {{ car.10 }}</h2>
-    <h2>Location: {{ car.11 }}</h2>
-    <h2>Current_Status: {{ car.12 }}</h2>
-    <h2>Seller_ID: {{ car.13 }}</h2>
+    <li>Car_ID: {{ car.0 }}</li>
+    <li>Body_Style: {{ car.1 }}</li>
+    <li>Exterior_Color: {{ car.2 }}</li>
+    <li>Transmission: {{ car.3 }}</li>
+    <li>Mileage: {{ car.4 }}</li>
+    <li>Engine: {{ car.5 }}</li>
+    <li>Title_Status: {{ car.6 }}</li>
+    <li>Make: {{ car.7 }}</li>
+    <li>Model: {{ car.8 }}</li>
+    <li>Year: {{ car.9 }}</li>
+    <li>Drivetrain: {{ car.10 }}</li>
+    <li>Location: {{ car.11 }}</li>
+    <li>Current_Status: {{ car.12 }}</li>
+    <li>Seller_ID: {{ car.13 }}</li>
     {% endfor %}
+  </ur>
+
+
+
+
+    
 
     <h2>This is the bidding from buyers:</h2>
 
@@ -51,13 +58,17 @@
 
     <form action="/endBidding">
 
+        <h2>Do you want to end this bidding?</h2>
 
-        Do you want to end this bidding?
-        Once you end this bidding, this car will be sold to the bidder with the highest bidder so far!
+        <h2>Once you end this bidding, this car will be sold to the bidder with the highest bidder so far!</h2>
+        
 
         <button class="btn">Yes</button>
 
     </form>
+
+    <h1><a href="/comments">Check comments for this auction!</a></h1>
+
 
    
 </body>
