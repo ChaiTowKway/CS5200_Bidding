@@ -88,6 +88,7 @@ def respond(request):
         print(assistant_message)
         query_result = connect_db(assistant_message)
         query_result = str(query_result)
+        print(query_result)
         query_result_rephase = client.chat.completions.create(
             messages=[
                 {
@@ -109,8 +110,11 @@ def connect_db(query):
     try:
         cursor.execute(query)
         response = cursor.fetchall()
-        columns1 = [col[0] for col in cursor.description]
-        results1 = [dict(zip(columns1, row)) for row in response]
-        return results1
+        if "UPDATE" in query:
+            return "Update successfully"
+        else:
+            columns1 = [col[0] for col in cursor.description]
+            results1 = [dict(zip(columns1, row)) for row in response]
+            return results1
     except:
         return "I apologize, but I'm unable to find a solution for your query. Could you please rephrase your question or provide more details so that I can better assist you?"
