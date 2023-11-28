@@ -6,7 +6,6 @@ from django.http import HttpResponse
 from django.db import connection
 import os, json
 from .models import User
-<<<<<<< HEAD
 import openai
 from openai import OpenAI
 from django.http import JsonResponse
@@ -20,12 +19,10 @@ client = OpenAI(
     api_key="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",
 )
 
-=======
 
 Car_ID = "JTDT4RCE7LJ025456"
 currentUserId = "990"
 currentUserName = "Lisa"
->>>>>>> page3
 def testmysql(request):
     user = User.objects.all()
     context = {
