@@ -1,0 +1,41 @@
+<h1>Comments Section</h1>
+
+
+{% for comment, replys in dataMap.items %}
+
+{{comment.1}} || {{comment.2}} ||  commentId: {{comment.0}}
+<br/>
+
+<input type="text" value="{{comment.3}}" size="100"><br/>
+
+    {% for reply in replys %}
+    --------------reply: {{reply.0}} || {{reply.1}} || {{reply.2}}
+        <br/>
+    {% endfor %}
+
+<br/>
+  
+{% endfor %}
+
+
+
+<form action="/creatComment">
+
+
+    <h3>Leave your coment for this auction here: </h3><input type="text" name="commenContent">
+    <!-- Auction<input type="text" name="auctionID"> -->
+    <!-- <input type="submit"> -->
+    <button class="btn">Post a comment</button>
+
+</form>
+
+
+
+<form action="/replyComment">
+    <h3>You can reply a comment here: </h3>
+
+    Type your content: <input type="text" name="replyContent">
+    commentId: <input type="text" name="commentId">
+    <button class="btn">Post a Reply</button>
+
+</form>
