@@ -31,18 +31,18 @@ from django.db import connection
 from django.http import HttpResponse
 
 
-def register(request):
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data.get('email')
-            messages.success(request, f'Account created for {email}!')
-            # Redirect to login page after registration
-            return redirect('login')
-    else:
-        form = UserRegistrationForm()
-    return render(request, 'registration/register.html', {'form': form})
+# def register(request):
+#     if request.method == 'POST':
+#         form = UserRegistrationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             email = form.cleaned_data.get('email')
+#             messages.success(request, f'Account created for {email}!')
+#             # Redirect to login page after registration
+#             return redirect('login')
+#     else:
+#         form = UserRegistrationForm()
+#     return render(request, 'registration/register.html', {'form': form})
 
 
 # Create your views here.
