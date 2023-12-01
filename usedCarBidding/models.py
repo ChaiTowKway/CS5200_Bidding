@@ -46,17 +46,28 @@ class Car(models.Model):
         db_column='Car_ID', primary_key=True, max_length=50)
     body_style = models.CharField(
         db_column='Body_Style', max_length=50, blank=True, null=True)
-    maker = models.CharField(
-        db_column='Maker', max_length=50, blank=True, null=True)
+    exterior_color = models.CharField(
+        db_column='Exterior_Color', max_length=50, blank=True, null=True)
+    transmission = models.CharField(
+        db_column='Transmission', max_length=50, blank=True, null=True)
+    mileage = models.IntegerField(db_column='Mileage', blank=True, null=True)
+    engine = models.CharField(
+        db_column='Engine', max_length=50, blank=True, null=True)
+    title_status = models.CharField(
+        db_column='Title_Status', max_length=50, blank=True, null=True)
+    make = models.CharField(
+        db_column='Make', max_length=50, blank=True, null=True)
     model = models.CharField(
         db_column='Model', max_length=50, blank=True, null=True)
     year = models.IntegerField(db_column='Year', blank=True, null=True)
+    drivetrain = models.CharField(
+        db_column='Drivetrain', max_length=50, blank=True, null=True)
     location = models.CharField(
         db_column='Location', max_length=100, blank=True, null=True)
-    description = models.TextField(
-        db_column='Description', blank=True, null=True)
     current_status = models.CharField(
-        db_column='Current_Status', max_length=50, default='Pending')
+        db_column='Current_Status', max_length=50, blank=True, null=True)
+    seller_id = models.ForeignKey(
+        User, models.DO_NOTHING, db_column='Seller_ID', blank=True, null=True)
 
     class Meta:
         db_table = 'Car'
@@ -64,12 +75,34 @@ class Car(models.Model):
 
 class Auction(models.Model):
     auction_id = models.AutoField(db_column='Auction_ID', primary_key=True)
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, db_column='Car_ID')
+    start_time = models.DateTimeField(
+        db_column='Start_Time', blank=True, null=True)
+    car_id = models.ForeignKey(
+        Car, models.DO_NOTHING, db_column='Car_ID', blank=True, null=True)
     minimum_price = models.DecimalField(
-        db_column='Minimum_Price', max_digits=10, decimal_places=2)
-    ending_time = models.DateTimeField(db_column='Ending_Time')
-    winner = models.ForeignKey(
-        User, on_delete=models.CASCADE, db_column='User_ID', blank=True, null=True)
+        db_column='Minimum_Price', max_digits=10, decimal_places=2, blank=True, null=True)
+    ending_time = models.DateTimeField(
+        db_column='Ending_Time', blank=True, null=True)
+    additional_info = models.CharField(
+        db_column='Additional_Info', max_length=50, blank=True, null=True)
+    winner_id = models.ForeignKey(
+        User, models.DO_NOTHING, db_column='Winner_id', blank=True, null=True)
+    minimum_deposit = models.DecimalField(
+        db_column='Minimum_Deposit', max_digits=10, decimal_places=2, blank=True, null=True)
+    auction_hold = models.IntegerField(
+        db_column='Auction_Hold', blank=True, null=True)
+    auction_status = models.CharField(
+        db_column='Auction_Status', max_length=50, blank=True, null=True)
+    is_verified = models.IntegerField(
+        db_column='is_verified', blank=True, null=True)
+    payment_id = models.IntegerField(
+        db_column='Payment_ID', blank=True, null=True)
+    shipping_id = models.ForeignKey(
+        'Shipping', models.DO_NOTHING, db_column='Shipping_ID', blank=True, null=True)
+    edit_time = models.CharField(
+        db_column='Edit_time', max_length=50, blank=True, null=True)
+    withdrawn = models.CharField(
+        db_column='Withdrawn', max_length=50, blank=True, null=True)
 
     class Meta:
         db_table = 'Auction'
@@ -77,15 +110,9 @@ class Auction(models.Model):
 
 class Bidding(models.Model):
     bidding_id = models.AutoField(db_column='Bidding_ID', primary_key=True)
-    auction = models.ForeignKey(
-        Auction, on_delete=models.CASCADE, db_column='Auction_ID')
-    bidder = models.ForeignKey(
-        User, on_delete=models.CASCADE, db_column='Bidder_ID')
-    bidding_price = models.DecimalField(
-        db_column='Bidding_Price', max_digits=10, decimal_places=2)
-
-    class Meta:
-        db_table = 'Bidding'
+    auction_id = models.ForeignKey(
+        Auction, models.DO_NOTHING, db_column='Auction_ID', blank=True, null=True)
+    bidder_id = models
 
 
 class Shipping(models.Model):
@@ -94,9 +121,14 @@ class Shipping(models.Model):
         db_column='Transport_Tracking_Number', max_length=50, blank=True, null=True)
     shipping_method = models.CharField(
         db_column='Shipping_Method', max_length=50, blank=True, null=True)
-    shipped_date = models.DateTimeField(
-        db_column='Shipped_Date', blank=True, null=True)
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, db_column='Car_ID')
+    delivered_date = models.DateTimeField(
+        db_column='Delivered_Date', blank=True, null=True)
+    temp_hold = models.CharField(
+        db_column='Temp_hold', max_length=50, blank=True, null=True)
+    shipping_status = models.CharField(
+        db_column='Shipping_Status', max_length=50, blank=True, null=True)
+    car_id = models.ForeignKey(
+        Car, on_delete=models.CASCADE, db_column='Car_ID')
 
     class Meta:
         db_table = 'Shipping'
