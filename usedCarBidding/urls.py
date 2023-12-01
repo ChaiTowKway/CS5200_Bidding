@@ -8,4 +8,18 @@ urlpatterns = [
     path("dbconnection/", views.check_db_connection, name="check_db_connection"),
     path('', views.testmysql, name='home'),
     path('respond/', respond, name='respond'),
+<<<<<<< HEAD
+    path('detail/', views.car_detail),
+    path('detailSeller/', views.car_detail_seller),
+    path('bidding/', views.place_bid),
+    path('endBidding/', views.end_bidding_for_seller),
+    path('comments/', views.get_comments_for_auction),
+    path('creatComment/',views.createComment),
+    path('replyComment/',views.createReply),
+=======
+    path('register/', register, name='register'),
+    path('login/', LoginView.as_view(template_name='registration/login.html'),
+         name='login_url'),
+>>>>>>> 44ccda2 (loggin and schema changed)
+
 ]
