@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Website Title</title>
+    <!-- Example of including an external CSS file -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <!-- You can add more CSS files or inline styles as needed -->
+  </head>
+  <body>
+    <header>
+      <nav>
+        <!-- Navigation bar content -->
+        <!-- Example of navigation links -->
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <!-- Add more navigation links as needed -->
+        </ul>
+      </nav>
+    </header>
+
+    <main role="main">
+      <!-- This block will be filled with child template content -->
+      {% block content %} {% endblock %}
+    </main>
+
+    <footer>
+      <!-- Footer content -->
+      <p>&copy; 2023 Your Website</p>
+    </footer>
+
+    <!-- Example of including an external JavaScript file -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- You can add more JavaScript files or inline scripts as needed -->
+  </body>
+</html>
