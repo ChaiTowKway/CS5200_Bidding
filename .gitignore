@@ -121,5 +121,5 @@ dmypy.json
 .DS_Store
 
 # Ignore custom static files and media files
-usedCarBidding/static/
-usedCarBidding/media/
+# usedCarBidding/static/
+# usedCarBidding/media/
