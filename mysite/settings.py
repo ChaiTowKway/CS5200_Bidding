@@ -102,10 +102,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'KhouryUsedCarsBiddingGroup11',
+            'NAME': 'car_bidding',
             'USER': 'root',
-            'PASSWORD': '',
-            'HOST': '34.168.124.155',
+            'PASSWORD': '58688RC8fight!',
+            'HOST': 'localhost',
             'PORT': '3306'}
     }
 

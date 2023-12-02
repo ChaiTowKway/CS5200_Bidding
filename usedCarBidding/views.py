@@ -175,6 +175,25 @@ def connect_db(query):
     except:
         return "I apologize, but I'm unable to find a solution for your query. Could you please rephrase your question or provide more details so that I can better assist you?"
 
+def car_list(request):
+        cursor = connection.cursor()
+        # sql0 = '''select * from Car where Car_ID = "{Car_ID}";'''.format(Car_ID=Car_ID)
+        sql = '''select * from Car ;'''  # where current_status='For Sale'
+        cursor.execute(sql)
+        rows = list(cursor.fetchall())
+
+        title = [title[0] for title in cursor.description]
+        res = []
+        for item in rows:
+            res.append(dict(list(zip(title, item))))
+
+        # print(res)
+        context = {
+            "carData": res,
+        }
+
+        return render(request, 'index.html', context)
+
 
 def car_detail(request):
 
@@ -183,6 +202,11 @@ def car_detail(request):
     # print("********", sql0 == sql1)
     # print(sql0)
     # print(sql1)
+    Car_id = request.GET['carId']
+    cursor = connection.cursor()
+    sql0 = '''select * from Car where Car_ID = "{Car_ID}";'''.format(Car_ID=Car_id)
+    cursor.execute(sql0)
+    rows1 = cursor.fetchall()
 
     cursor = connection.cursor()
     sql0 = '''select * from Car where Car_ID = "{Car_ID}";'''.format(
@@ -192,15 +216,25 @@ def car_detail(request):
 
     # Todo: what if no auction for this car ever--> max(Bidding_Price)
     cursor.execute(
-        '''select Auction_ID, max(Bidding_Price) from Bidding where Auction_ID = (select Auction_ID from Auction where Car_ID = '{Car_ID}');'''.format(Car_ID=Car_ID))
-    rows2 = cursor.fetchall()
+        '''select Auction_ID, max(Bidding_Price) as Bidding_Price from Bidding where Auction_ID = (select Auction_ID from Auction where Car_ID = '{Car_ID}') group by Auction_ID,Bidding_Price ;'''.format(
+            Car_ID=Car_ID))
 
-    auctionID_sql = '''select Auction_ID from Auction where Car_ID = '{Car_ID}';'''.format(
-        Car_ID=Car_ID)
+    rows2 = cursor.fetchall()
+    print(rows2)
+
+    auctionID_sql = '''select Auction_ID from Auction where Car_ID = '{Car_ID}';'''.format(Car_ID=Car_ID)
     cursor.execute(auctionID_sql)
-    auctionID = cursor.fetchall()[0]
-    print(auctionID, type(auctionID), "!!!!!!!!!!!!!!!!!")
-    print(auctionID[0], type(auctionID[0]), "!!!!!!!!!!!!!!!!!")
+    # auctionID = cursor.fetchall()[0]
+
+    auctionID = cursor.fetchall()
+    print(auctionID)
+    if len(auctionID) == 0:
+        # if auctionID is None:
+        print('无数据')
+    else:
+        auctionID = auctionID[0]
+        print(auctionID, type(auctionID), "!!!!!!!!!!!!!!!!!")
+        print(auctionID[0], type(auctionID[0]), "!!!!!!!!!!!!!!!!!")
 
     context = {
         "data1": rows1,

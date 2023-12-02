@@ -6,7 +6,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path("dbconnection/", views.check_db_connection, name="check_db_connection"),
-    path('', views.testmysql, name='home'),
+    path('', views.car_list, name='home'),
+    path('', views.testmysql),
     path('respond/', respond, name='respond'),
     path('detail/', views.car_detail),
     path('detailSeller/', views.car_detail_seller),
