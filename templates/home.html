@@ -1,16 +1,21 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>Test MySQL</title>
-</head>
-{% block content %}
-<body>
-<h1>ID: {{ user_id }}</h1>
-<h1>NAME: {{ user_name }} </h1>
-<h1>Email: {{ user_email }} </h1>
-</body>
-{% include './chatbot/chat.html' %}
-{% endblock %}
-
+  <head>
+    <title>Test MySQL</title>
+  </head>
+  <body>
+    {% block content %} {% if is_authenticated %}
+    <h1>ID: {{ user_id }}</h1>
+    <h1>NAME: {{ user_name }}</h1>
+    <h1>Email: {{ user_email }}</h1>
+    <!-- Logout Link -->
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <h1>Please Log In</h1>
+    <!-- Login Button -->
+    <a href="{% url 'login' %}">Login</a>
+    <!-- Adjust 'login' based on your login URL name -->
+    {% endif %} {% include './chatbot/chat.html' %} {% endblock %}
+  </body>
 </html>

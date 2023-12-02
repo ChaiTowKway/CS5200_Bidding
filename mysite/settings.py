@@ -72,10 +72,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
+AUTH_USER_MODEL = 'usedCarBidding.User'
 
-# Database
+LOGIN_REDIRECT_URL = 'home'  # Redirect to home page or any other page
+# LOGOUT_REDIRECT_URL = 'home'  # Optional: Redirect to home page on logout
+
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-pymysql.version_info = (1, 4, 6, 'final', 0) # change mysqlclient version
+pymysql.version_info = (1, 4, 6, 'final', 0)  # change mysqlclient version
 pymysql.install_as_MySQLdb()
 # DATABASES = {
 #     'default': {
@@ -88,23 +91,23 @@ pymysql.install_as_MySQLdb()
 if os.getenv('GAE_APPLICATION', None):
     DATABASES = {
         'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '/cloudsql/neu-cs5200-23fall-group11:us-west1:group11-hello',
-        'NAME': 'KhouryUsedCarsBiddingGroup11',
-        'USER': 'root',
-        'PASSWORD': ''
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/neu-cs5200-23fall-group11:us-west1:group11-hello',
+            'NAME': 'KhouryUsedCarsBiddingGroup11',
+            'USER': 'root',
+            'PASSWORD': ''
+        }
     }
-}
 else:
     DATABASES = {
         'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'KhouryUsedCarsBiddingGroup11',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '34.168.124.155',
-        'PORT': '3306'}
-}
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'KhouryUsedCarsBiddingGroup11',
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST': '34.168.124.155',
+            'PORT': '3306'}
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

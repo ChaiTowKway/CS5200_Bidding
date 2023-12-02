@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Car Info</title>
+</head>
+
+<body>
+    <h1>Car Info</h1>
+    <ur>
+        {% for car in data1 %}
+        <li>Car_ID: {{ car.0 }}</li>
+        <li>Body_Style: {{ car.1 }}</li>
+        <li>Exterior_Color: {{ car.2 }}</li>
+        <li>Transmission: {{ car.3 }}</li>
+        <li>Mileage: {{ car.4 }}</li>
+        <li>Engine: {{ car.5 }}</li>
+        <li>Title_Status: {{ car.6 }}</li>
+        <li>Make: {{ car.7 }}</li>
+        <li>Model: {{ car.8 }}</li>
+        <li>Year: {{ car.9 }}</li>
+        <li>Drivetrain: {{ car.10 }}</li>
+        <li>Location: {{ car.11 }}</li>
+        <li>Current_Status: {{ car.12 }}</li>
+        <li>Seller_ID: {{ car.13 }}</li>
+        {% endfor %}
+    </ur>
+
+    {% for Auction_ID, max_price in data2 %}
+    <h1>The highest bidding for this car is: {{max_price}} --- Auction Id: {{Auction_ID}}</h1>
+
+
+    
+    {% endfor %}
+
+    <form action="/bidding">
+
+
+        Place a bid: <input type="text" name="biddingPrice">
+        <!-- Auction<input type="text" name="auctionID"> -->
+        <!-- <input type="submit"> -->
+        <button class="btn">Place a Bid</button>
+
+    </form>
+
+
+    <h1><a href="/comments">Check comments for this auction!</a></h1>
+
+
+
+    <!-- <h1>Comments Section</h1>
+    {% for create_by_user_Name, create_at, CommenContent in data0 %}
+    {{create_by_user_Name}}
+    {{create_at}}
+    {{CommenContent}}
+
+
+
+    {% endfor %} -->
+
+   
+</body>
+</html>

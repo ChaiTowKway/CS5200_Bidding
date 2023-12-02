@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Car Info</title>
+</head>
+
+<body>
+    <h1>Car Info</h1>
+  <ur>
+    {% for car in data1 %}
+    <li>Car_ID: {{ car.0 }}</li>
+    <li>Body_Style: {{ car.1 }}</li>
+    <li>Exterior_Color: {{ car.2 }}</li>
+    <li>Transmission: {{ car.3 }}</li>
+    <li>Mileage: {{ car.4 }}</li>
+    <li>Engine: {{ car.5 }}</li>
+    <li>Title_Status: {{ car.6 }}</li>
+    <li>Make: {{ car.7 }}</li>
+    <li>Model: {{ car.8 }}</li>
+    <li>Year: {{ car.9 }}</li>
+    <li>Drivetrain: {{ car.10 }}</li>
+    <li>Location: {{ car.11 }}</li>
+    <li>Current_Status: {{ car.12 }}</li>
+    <li>Seller_ID: {{ car.13 }}</li>
+    {% endfor %}
+  </ur>
+
+
+
+
+    
+
+    <h2>This is the bidding from buyers:</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Bidding_ID</th>
+                <th>Auction_ID</th>
+                <th>Bidder_ID</th>
+                <th>Bidding_Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for auction in data2 %}
+            <tr>
+                <td>{{ auction.0 }}</td>
+                <td>{{ auction.1 }}</td>
+                <td>{{ auction.2 }}</td>
+                <td>{{ auction.3 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    
+
+    <form action="/endBidding">
+
+        <h2>Do you want to end this bidding?</h2>
+
+        <h2>Once you end this bidding, this car will be sold to the bidder with the highest bidder so far!</h2>
+        
+
+        <button class="btn">Yes</button>
+
+    </form>
+
+    <h1><a href="/comments">Check comments for this auction!</a></h1>
+
+
+   
+</body>
+</html>
