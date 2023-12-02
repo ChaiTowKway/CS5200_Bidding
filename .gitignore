@@ -109,13 +109,13 @@ dmypy.json
 .prof
 
 # static files
-/static
+# /static
 
 # database
 /db.sqlite3
 
 # media files
-/media
+# /media
 
 # Other
 .DS_Store

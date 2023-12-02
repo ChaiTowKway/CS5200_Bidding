@@ -109,26 +109,42 @@ class Auction(models.Model):
 
 
 class Bidding(models.Model):
+    # Field name made lowercase.
     bidding_id = models.AutoField(db_column='Bidding_ID', primary_key=True)
+    # Field name made lowercase.
     auction_id = models.ForeignKey(
         Auction, models.DO_NOTHING, db_column='Auction_ID', blank=True, null=True)
-    bidder_id = models
+    # Field name made lowercase.
+    bidder_id = models.ForeignKey(
+        'User', models.DO_NOTHING, db_column='Bidder_ID', blank=True, null=True)
+    # Field name made lowercase.
+    bidding_price = models.DecimalField(
+        db_column='Bidding_Price', max_digits=10, decimal_places=2, blank=True, null=True)
+
+    class Meta:
+        # managed = False
+        db_table = 'Bidding'
 
 
 class Shipping(models.Model):
+    # Field name made lowercase.
     shipping_id = models.AutoField(db_column='Shipping_ID', primary_key=True)
+    # Field name made lowercase.
     transport_tracking_number = models.CharField(
         db_column='Transport_Tracking_Number', max_length=50, blank=True, null=True)
+    # Field name made lowercase.
     shipping_method = models.CharField(
         db_column='Shipping_Method', max_length=50, blank=True, null=True)
+    # Field name made lowercase.
     delivered_date = models.DateTimeField(
         db_column='Delivered_Date', blank=True, null=True)
+    # Field name made lowercase.
     temp_hold = models.CharField(
         db_column='Temp_hold', max_length=50, blank=True, null=True)
+    # Field name made lowercase.
     shipping_status = models.CharField(
         db_column='Shipping_Status', max_length=50, blank=True, null=True)
-    car_id = models.ForeignKey(
-        Car, on_delete=models.CASCADE, db_column='Car_ID')
 
     class Meta:
+        # managed = False
         db_table = 'Shipping'
