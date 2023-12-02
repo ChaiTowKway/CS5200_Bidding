@@ -104,7 +104,7 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'car_bidding',
             'USER': 'root',
-            'PASSWORD': '58688RC8fight!',
+            'PASSWORD': '',
             'HOST': 'localhost',
             'PORT': '3306'}
     }
