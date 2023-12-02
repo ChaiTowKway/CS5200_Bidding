@@ -148,3 +148,34 @@ class Shipping(models.Model):
     class Meta:
         # managed = False
         db_table = 'Shipping'
+
+
+class Reply(models.Model):
+    Reply_ID = models.AutoField(primary_key=True, db_column='Reply_ID')
+    ReplyContent = models.CharField(max_length=100, db_column='ReplyContent')
+    create_at = models.DateField(db_column='create_at')
+    create_by_user_ID = models.IntegerField(db_column='create_by_user_ID')
+    create_by_user_Name = models.CharField(
+        max_length=100, db_column='create_by_user_Name')
+    CommentID = models.ForeignKey(
+        'Comments', on_delete=models.CASCADE, db_column='CommentID')
+
+    class Meta:
+        # managed = False  # Uncomment this if you don't want Django to manage the table
+        db_table = 'reply'
+
+
+class Comments(models.Model):
+    CommentID = models.AutoField(primary_key=True, db_column='CommentID')
+    CommenContent = models.CharField(
+        max_length=100, db_column='CommenContent')
+    create_at = models.DateField(db_column='create_at')
+    create_by_user_ID = models.IntegerField(db_column='create_by_user_ID')
+    create_by_user_Name = models.CharField(
+        max_length=100, db_column='create_by_user_Name')
+    auction_id = models.ForeignKey(
+        Auction, on_delete=models.CASCADE, db_column='auction_id')
+
+    class Meta:
+        # managed = False  # Uncomment this if you don't want Django to manage the table
+        db_table = 'Comments'
