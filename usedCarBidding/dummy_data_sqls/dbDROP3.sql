@@ -1,0 +1,9 @@
+-- Drop data from tables but keep the tables
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE Bidding;
+TRUNCATE TABLE Comments;
+TRUNCATE TABLE Reply;
+TRUNCATE TABLE Shipping;
+TRUNCATE TABLE Auction;
+TRUNCATE TABLE Car;
+SET FOREIGN_KEY_CHECKS = 1;
