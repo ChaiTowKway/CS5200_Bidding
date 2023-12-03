@@ -140,7 +140,7 @@ def respond(request):
         # Extract the assistant's reply from the OpenAI API response
         assistant_message = response.choices[0].message.content
         print(assistant_message)
-        query_result = connect_db(assistant_message)
+        query_result = connect_db(assistant_message, request)
         query_result = str(query_result)
         print(query_result)
         query_result_rephase = client.chat.completions.create(
@@ -161,13 +161,18 @@ def respond(request):
     return JsonResponse({})
 
 
-def connect_db(query):
+def connect_db(query, request):
     cursor = connection.cursor()
     try:
         cursor.execute(query)
         response = cursor.fetchall()
         if "UPDATE" in query:
             return "Update successfully"
+        elif "DELETE" in query:
+            if request.user.isadmin:
+                return "Successfully removed"
+            else:
+                return "Sorry, only admin can perform the delete action."
         else:
             columns1 = [col[0] for col in cursor.description]
             results1 = [dict(zip(columns1, row)) for row in response]
