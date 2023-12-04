@@ -164,6 +164,9 @@ def respond(request):
 def connect_db(query, request):
     cursor = connection.cursor()
     try:
+        if "DELETE" in query:
+            if not request.user.isadmin:
+                return "Sorry, only admin can perform the delete action."
         cursor.execute(query)
         response = cursor.fetchall()
         if "UPDATE" in query:
@@ -171,8 +174,6 @@ def connect_db(query, request):
         elif "DELETE" in query:
             if request.user.isadmin:
                 return "Successfully removed"
-            else:
-                return "Sorry, only admin can perform the delete action."
         else:
             columns1 = [col[0] for col in cursor.description]
             results1 = [dict(zip(columns1, row)) for row in response]
