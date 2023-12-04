@@ -10,7 +10,7 @@ urlpatterns = [
     path('', views.testmysql),
     path('respond/', respond, name='respond'),
     path('detail/', views.car_detail),
-    path('detailSeller/', views.car_detail_seller),
+#     path('detailSeller/', views.car_detail_seller),
     path('bidding/', views.place_bid),
     path('endBidding/', views.end_bidding_for_seller),
     path('comments/', views.get_comments_for_auction),
