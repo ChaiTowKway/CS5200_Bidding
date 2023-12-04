@@ -95,7 +95,7 @@ if os.getenv('GAE_APPLICATION', None):
             'HOST': '/cloudsql/neu-cs5200-23fall-group11:us-west1:group11-hello',
             'NAME': 'KhouryUsedCarsBiddingGroup11',
             'USER': 'root',
-            'PASSWORD': ''
+            'PASSWORD': 'group11123456'
         }
     }
 else:
@@ -104,7 +104,7 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'KhouryUsedCarsBiddingGroup11',
             'USER': 'root',
-            'PASSWORD': '',
+            'PASSWORD': 'group11123456',
             'HOST': '34.168.124.155',
             'PORT': '3306'}
     }
