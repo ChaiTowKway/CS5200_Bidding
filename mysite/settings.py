@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-um$==g_%kg-89knzw(+%d-$g5_c1@7@m$(a7_gpq-_863_w63='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -143,7 +143,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 STATIC_ROOT = 'static'
-STATIC_URL = 'static/'
+STATIC_URL = 'https://storage.googleapis.com/neu-cs5200-23fall-group11.appspot.com/static/'
+# if os.getenv('GAE_APPLICATION', None):
+#     STATIC_URL = 'https://storage.googleapis.com/neu-cs5200-23fall-group11.appspot.com/static/'
+# else:
+#     STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
