@@ -23,9 +23,11 @@
 
 
     <h3>Leave your coment for this auction here: </h3><input type="text" name="commenContent">
+    <input type="hidden" name="carId" value="{{ carID}}">
     <!-- Auction<input type="text" name="auctionID"> -->
     <!-- <input type="submit"> -->
     <button class="btn">Post a comment</button>
+    
 
 </form>
 
@@ -36,6 +38,8 @@
 
     Type your content: <input type="text" name="replyContent">
     commentId: <input type="text" name="commentId">
+
+    <input type="hidden" name="carId" value="{{ carID}}">
     <button class="btn">Post a Reply</button>
 
 </form>
