@@ -495,7 +495,9 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from .forms import CarForm
+from .models import Auction
 
 def post_car(request):
     if request.method == 'POST':
@@ -512,6 +514,10 @@ def post_car(request):
                 return render(request, 'home.html', context)
             car.seller_id = request.user
             car.save()
+            auction = Auction()
+            auction.start_time = timezone.now()
+            auction.car_id = car
+            auction.save()
             return redirect('home')  # Redirect to a page showing all cars
     else:
         form = CarForm()
