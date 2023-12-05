@@ -493,3 +493,27 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+from django.shortcuts import render, redirect
+from .forms import CarForm
+
+def post_car(request):
+    if request.method == 'POST':
+        form = CarForm(request.POST)
+        if form.is_valid():
+            car = form.save(commit=False)
+            if request.user.is_authenticated == False:
+                context = {
+                    'user_id': 'N/A',
+                    'user_name': 'Guest',
+                    'user_email': 'N/A',
+                    'is_authenticated': False,
+                }
+                return render(request, 'home.html', context)
+            car.seller_id = request.user
+            car.save()
+            return redirect('home')  # Redirect to a page showing all cars
+    else:
+        form = CarForm()
+
+    return render(request, 'post_car.html', {'form': form})

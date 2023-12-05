@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User
+from .models import User, Car
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -11,3 +11,8 @@ class CustomUserCreationForm(UserCreationForm):
 
 class CustomLoginForm(AuthenticationForm):
     pass  # Customize if needed
+
+class CarForm(forms.ModelForm):
+    class Meta:
+        model = Car
+        exclude = ['seller_id']
