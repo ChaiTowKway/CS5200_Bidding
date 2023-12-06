@@ -1,3 +1,6 @@
+from .models import Auction
+from .forms import CarForm
+from django.utils import timezone
 import datetime
 from django.contrib.auth import authenticate, login
 from django.apps import apps
@@ -31,30 +34,11 @@ from django.db import connection
 from django.http import HttpResponse
 
 
-# def register(request):
-#     if request.method == 'POST':
-#         form = UserRegistrationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             email = form.cleaned_data.get('email')
-#             messages.success(request, f'Account created for {email}!')
-#             # Redirect to login page after registration
-#             return redirect('login')
-#     else:
-#         form = UserRegistrationForm()
-#     return render(request, 'registration/register.html', {'form': form})
-
-
-# Create your views here.
-
 # Set up your OpenAI API key
 client = OpenAI(
     # defaults to os.environ.get("OPENAI_API_KEY")
     api_key="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",
 )
-
-
-
 
 
 def testmysql(request):
@@ -179,31 +163,32 @@ def connect_db(query, request):
     except:
         return "I apologize, but I'm unable to find a solution for your query. Could you please rephrase your question or provide more details so that I can better assist you?"
 
+
 def car_list(request):
-        cursor = connection.cursor()
-        # sql0 = '''select * from Car where Car_ID = "{Car_ID}";'''.format(Car_ID=Car_ID)
-        sql = '''select * from Car ;'''  # where current_status='For Sale'
-        cursor.execute(sql)
-        rows = list(cursor.fetchall())
+    cursor = connection.cursor()
+    # sql0 = '''select * from Car where Car_ID = "{Car_ID}";'''.format(Car_ID=Car_ID)
+    sql = '''select * from Car ;'''  # where current_status='For Sale'
+    cursor.execute(sql)
+    rows = list(cursor.fetchall())
 
-        title = [title[0] for title in cursor.description]
-        res = []
-        for item in rows:
-            res.append(dict(list(zip(title, item))))
+    title = [title[0] for title in cursor.description]
+    res = []
+    for item in rows:
+        res.append(dict(list(zip(title, item))))
 
-        # print(res)
-        context = {
-            "carData": res,
-        }
+    # print(res)
+    context = {
+        "carData": res,
+    }
 
-        return render(request, 'index.html', context)
+    return render(request, 'index.html', context)
 
 
 def car_detail(request):
-    #check if user login. guest cannot see the details of a car
+    # check if user login. guest cannot see the details of a car
 
     if request.user.is_authenticated == False:
-    
+
         context = {
             'user_id': 'N/A',
             'user_name': 'Guest',
@@ -212,102 +197,96 @@ def car_detail(request):
         }
 
         return render(request, 'home.html', context)
-    
 
-    # check if current login use is seller 
-        
+    # check if current login use is seller
+
     Car_ID = request.GET['carId']
     print("car id is!!!!!!!!!", Car_ID)
 
-    
     cursor = connection.cursor()
 
-    seller_id_sql = '''select Seller_ID from Car where Car_ID='{Car_ID}';'''.format(Car_ID=Car_ID)
+    seller_id_sql = '''select Seller_ID from Car where Car_ID='{Car_ID}';'''.format(
+        Car_ID=Car_ID)
     cursor.execute(seller_id_sql)
     seller_id = cursor.fetchall()
-    print(type(seller_id[0][0]), seller_id[0][0],"&&&&&&&&&seller id")
-    print(type(request.user.userid), request.user.userid,"!!!!!!!!!!user id")
+    print(type(seller_id[0][0]), seller_id[0][0], "&&&&&&&&&seller id")
+    print(type(request.user.userid), request.user.userid, "!!!!!!!!!!user id")
     print(seller_id[0][0] == request.user.userid)
     if seller_id[0][0] == request.user.userid:
         # return HttpResponse("""you are a seller""")
         print("call seller")
         cursor = connection.cursor()
-        sql0= '''select * from Car where Car_ID = "{Car_ID}";'''.format(Car_ID=Car_ID)
+        sql0 = '''select * from Car where Car_ID = "{Car_ID}";'''.format(
+            Car_ID=Car_ID)
         cursor.execute(sql0)
         rows1 = cursor.fetchall()
 
-        #Todo: what if no auction for this car ever--> max(Bidding_Price)
-        cursor.execute('''select * from Bidding where Auction_ID = (select Auction_ID from Auction where Car_ID = '{Car_ID}') order by Bidding_Price DESC;'''.format(Car_ID=Car_ID))
+        # Todo: what if no auction for this car ever--> max(Bidding_Price)
+        cursor.execute(
+            '''select * from Bidding where Auction_ID = (select Auction_ID from Auction where Car_ID = '{Car_ID}') order by Bidding_Price DESC;'''.format(Car_ID=Car_ID))
         rows2 = cursor.fetchall()
 
         context = {
-        "data1" : rows1,
-        "data2" : rows2
+            "data1": rows1,
+            "data2": rows2
         }
 
         return render(request, 'detailSeller.html', context)
     else:
 
-        sql0= '''select * from Car where Car_ID = "{Car_ID}";'''.format(Car_ID=Car_ID)
+        sql0 = '''select * from Car where Car_ID = "{Car_ID}";'''.format(
+            Car_ID=Car_ID)
         cursor.execute(sql0)
         rows1 = cursor.fetchall()
 
-
-
-        #Todo: what if no auction for this car ever--> max(Bidding_Price)
-        cursor.execute('''select Auction_ID, max(Bidding_Price) from Bidding where Auction_ID = (select Auction_ID from Auction where Car_ID = '{Car_ID}');'''.format(Car_ID=Car_ID))
+        # Todo: what if no auction for this car ever--> max(Bidding_Price)
+        cursor.execute(
+            '''select Auction_ID, max(Bidding_Price) from Bidding where Auction_ID = (select Auction_ID from Auction where Car_ID = '{Car_ID}');'''.format(Car_ID=Car_ID))
         rows2 = cursor.fetchall()
 
-
-        auctionID_sql = '''select Auction_ID from Auction where Car_ID = '{Car_ID}';'''.format(Car_ID=Car_ID)
+        auctionID_sql = '''select Auction_ID from Auction where Car_ID = '{Car_ID}';'''.format(
+            Car_ID=Car_ID)
         cursor.execute(auctionID_sql)
         auctionID = cursor.fetchall()[0]
         # print(auctionID, type(auctionID),"!!!!!!!!!!!!!!!!!")
         # print(auctionID[0], type(auctionID[0]),"!!!!!!!!!!!!!!!!!")
 
         context = {
-        "data1" : rows1,
-        "data2" : rows2,
-        'user_id': request.user.userid,
-        'user_name': request.user.name,
-        'user_email': request.user.email,
+            "data1": rows1,
+            "data2": rows2,
+            'user_id': request.user.userid,
+            'user_name': request.user.name,
+            'user_email': request.user.email,
         }
-
-
-
 
         return render(request, 'detail.html', context)
 
 
 def place_bid(request):
     # auctionID = request.GET['auctionID']
-    print("#############",request.GET['carId'])
+    print("#############", request.GET['carId'])
     Car_ID = request.GET['carId']
-    
+
     cursor = connection.cursor()
-    check_winner_sql = '''select Winner_id from Auction where Car_ID = '{Car_ID}';'''.format(Car_ID=Car_ID)
+    check_winner_sql = '''select Winner_id from Auction where Car_ID = '{Car_ID}';'''.format(
+        Car_ID=Car_ID)
     cursor.execute(check_winner_sql)
     check_winner = cursor.fetchall()[0][0]
     if check_winner != None:
         return HttpResponse("""Opps the auction for this car is over! You can not place a bid!!""")
-    
+
     biddingPrice = request.GET['biddingPrice']
     bidder_ID = request.user.userid
 
-
-    
-    
-
-    auctionID_sql = '''select Auction_ID from Auction where Car_ID = '{Car_ID}';'''.format(Car_ID=Car_ID)
+    auctionID_sql = '''select Auction_ID from Auction where Car_ID = '{Car_ID}';'''.format(
+        Car_ID=Car_ID)
     cursor.execute(auctionID_sql)
     auctionID = cursor.fetchall()[0][0]
 
-    sql = """INSERT INTO Bidding(Auction_ID, Bidder_ID, Bidding_Price) VALUES ({auctionID},{bidder_ID},{biddingPrice})""".format(bidder_ID=bidder_ID, biddingPrice=biddingPrice, auctionID=auctionID)
+    sql = """INSERT INTO Bidding(Auction_ID, Bidder_ID, Bidding_Price) VALUES ({auctionID},{bidder_ID},{biddingPrice})""".format(
+        bidder_ID=bidder_ID, biddingPrice=biddingPrice, auctionID=auctionID)
 
-    
     cursor.execute(sql)
-
-
 
     return HttpResponse("""Congrats! You placed a bid!!""")
 
@@ -328,7 +307,6 @@ def place_bid(request):
 #     rows1 = cursor.fetchall()
 
 
-
 #     #Todo: what if no auction for this car ever--> max(Bidding_Price)
 #     cursor.execute('''select * from Bidding where Auction_ID = (select Auction_ID from Auction where Car_ID = '{Car_ID}') order by Bidding_Price DESC;'''.format(Car_ID=Car_ID))
 #     rows2 = cursor.fetchall()
@@ -344,25 +322,23 @@ def place_bid(request):
 
 def end_bidding_for_seller(request):
 
-
     Car_ID = request.GET['carId']
     cursor = connection.cursor()
-    auctionID_sql = '''select Auction_ID from Auction where Car_ID = '{Car_ID}';'''.format(Car_ID=Car_ID)
+    auctionID_sql = '''select Auction_ID from Auction where Car_ID = '{Car_ID}';'''.format(
+        Car_ID=Car_ID)
     cursor.execute(auctionID_sql)
     auctionID = cursor.fetchall()[0][0]
     print("@@@@@@@@@@@@@@1", auctionID)
 
-
     # Winner_id = 1 is a dummy id here just to mark this car has been sold
-    set_winner_sql = '''update Auction set Winner_id = 1 where Auction_ID = {auctionID};'''.format(auctionID=auctionID)
+    set_winner_sql = '''update Auction set Winner_id = 1 where Auction_ID = {auctionID};'''.format(
+        auctionID=auctionID)
     cursor.execute(set_winner_sql)
 
-    set_car_status_sql = '''update Car set Current_Status = 'Sold' where Car_ID = '{Car_ID}';'''.format(Car_ID=Car_ID)
+    set_car_status_sql = '''update Car set Current_Status = 'Sold' where Car_ID = '{Car_ID}';'''.format(
+        Car_ID=Car_ID)
     cursor.execute(set_car_status_sql)
-    
-    
-    
-    
+
     return HttpResponse("""Congrats! You Car has been sold to the bidder with the highest bidder !!""")
 
 
@@ -408,7 +384,6 @@ def get_comments_for_auction(request):
 
 def createComment(request):
 
-
     if request.user.is_authenticated:
         context = {
             'user_id': request.user.userid,
@@ -428,7 +403,6 @@ def createComment(request):
         }
         return render(request, 'home.html', context)
 
-    
     Car_ID = request.GET['carId']
     cursor = connection.cursor()
     auctionID_sql = '''select Auction_ID from Auction where Car_ID = '{Car_ID}';'''.format(
@@ -469,7 +443,7 @@ def createReply(request):
             'is_authenticated': False,
         }
         return render(request, 'home.html', context)
-    
+
     Car_ID = request.GET['carId']
     cursor = connection.cursor()
 
@@ -494,10 +468,6 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
-from django.shortcuts import render, redirect
-from django.utils import timezone
-from .forms import CarForm
-from .models import Auction
 
 def post_car(request):
     if request.method == 'POST':
