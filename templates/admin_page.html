@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>User Data</h1>
+<table>
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Is Admin</th>
+            <th>Admin Verify</th>
+            <th>Last Signin</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.userid }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.isadmin }}</td>
+                <td>{{ user.admin_verify }}</td>
+                <td>{{ user.last_signin }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h1>Car Data</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Car ID</th>
+            <th>Body Style</th>
+            <th>Exterior Color</th>
+            <th>Transmission</th>
+            <th>Mileage</th>
+            <th>Engine</th>
+            <th>Title Status</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Drivetrain</th>
+            <th>Location</th>
+            <th>Current Status</th>
+            <th>Seller ID</th>
+            <!-- Add more headers based on your Car model fields -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for car in cars %}
+            <tr>
+                <td>{{ car.car_id }}</td>
+                <td>{{ car.body_style }}</td>
+                <td>{{ car.exterior_color }}</td>
+                <td>{{ car.transmission }}</td>
+                <td>{{ car.mileage }}</td>
+                <td>{{ car.engine }}</td>
+                <td>{{ car.title_status }}</td>
+                <td>{{ car.make }}</td>
+                <td>{{ car.model }}</td>
+                <td>{{ car.year }}</td>
+                <td>{{ car.drivetrain }}</td>
+                <td>{{ car.location }}</td>
+                <td>{{ car.current_status }}</td>
+                <td>{{ car.seller_id.userid }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h1>Auction Data</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Auction ID</th>
+            <th>Start Time</th>
+            <th>Car ID</th>
+            <th>Minimum Price</th>
+            <th>Ending Time</th>
+            <th>Additional Info</th>
+            <th>Winner ID</th>
+            <th>Minimum Deposit</th>
+            <th>Auction Hold</th>
+            <th>Auction Status</th>
+            <th>Is Verified</th>
+            <th>Payment ID</th>
+            <th>Shipping ID</th>
+            <th>Edit Time</th>
+            <th>Withdrawn</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for auction in auctions %}
+            <tr>
+                <td>{{ auction.auction_id }}</td>
+                <td>{{ auction.start_time }}</td>
+                <td>{{ auction.car_id.car_id }}</td>
+                <td>{{ auction.minimum_price }}</td>
+                <td>{{ auction.ending_time }}</td>
+                <td>{{ auction.additional_info }}</td>
+                <td>{{ auction.winner_id.userid }}</td>
+                <td>{{ auction.minimum_deposit }}</td>
+                <td>{{ auction.auction_hold }}</td>
+                <td>{{ auction.auction_status }}</td>
+                <td>{{ auction.is_verified }}</td>
+                <td>{{ auction.payment_id }}</td>
+                <td>{{ auction.shipping_id.shipping_id }}</td>
+                <td>{{ auction.edit_time }}</td>
+                <td>{{ auction.withdrawn }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h1>Bidding Data</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Bidding ID</th>
+            <th>Auction ID</th>
+            <th>Bidder ID</th>
+            <th>Bidding Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bidding in biddings %}
+            <tr>
+                <td>{{ bidding.bidding_id }}</td>
+                <td>{{ bidding.auction_id.auction_id }}</td>
+                <td>{{ bidding.bidder_id.userid }}</td>
+                <td>{{ bidding.bidding_price }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -67,7 +67,7 @@ class Car(models.Model):
     current_status = models.CharField(
         db_column='Current_Status', max_length=50, blank=True, null=True)
     seller_id = models.ForeignKey(
-        User, models.DO_NOTHING, db_column='Seller_ID', blank=True, null=True)
+        User, db_column='Seller_ID', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Car'
@@ -78,7 +78,7 @@ class Auction(models.Model):
     start_time = models.DateTimeField(
         db_column='Start_Time', blank=True, null=True)
     car_id = models.ForeignKey(
-        Car, models.DO_NOTHING, db_column='Car_ID', blank=True, null=True)
+        Car, on_delete=models.CASCADE, db_column='Car_ID', blank=True, null=True)
     minimum_price = models.DecimalField(
         db_column='Minimum_Price', max_digits=10, decimal_places=2, blank=True, null=True)
     ending_time = models.DateTimeField(
@@ -98,7 +98,7 @@ class Auction(models.Model):
     payment_id = models.IntegerField(
         db_column='Payment_ID', blank=True, null=True)
     shipping_id = models.ForeignKey(
-        'Shipping', models.DO_NOTHING, db_column='Shipping_ID', blank=True, null=True)
+        'Shipping', db_column='Shipping_ID', blank=True, null=True, on_delete=models.CASCADE)
     edit_time = models.CharField(
         db_column='Edit_time', max_length=50, blank=True, null=True)
     withdrawn = models.CharField(
@@ -113,10 +113,10 @@ class Bidding(models.Model):
     bidding_id = models.AutoField(db_column='Bidding_ID', primary_key=True)
     # Field name made lowercase.
     auction_id = models.ForeignKey(
-        Auction, models.DO_NOTHING, db_column='Auction_ID', blank=True, null=True)
+        Auction, db_column='Auction_ID', blank=True, null=True, on_delete=models.CASCADE)
     # Field name made lowercase.
     bidder_id = models.ForeignKey(
-        'User', models.DO_NOTHING, db_column='Bidder_ID', blank=True, null=True)
+        'User', db_column='Bidder_ID', blank=True, null=True, on_delete=models.CASCADE)
     # Field name made lowercase.
     bidding_price = models.DecimalField(
         db_column='Bidding_Price', max_digits=10, decimal_places=2, blank=True, null=True)

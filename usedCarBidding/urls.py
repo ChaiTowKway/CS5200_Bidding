@@ -22,5 +22,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='home'),
          name='logout'),  # Redirect to 'home' after logout
     path('post_car/', views.post_car, name='post_car'),
+    path('admin_page/', views.display_data, name='display_data'),
 
 ]

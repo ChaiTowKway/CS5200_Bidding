@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from openai import OpenAI
 import openai
-from .models import User
+from .models import User, Car, Auction, Bidding
 import json
 import os
 from django.db import connection
@@ -493,3 +493,26 @@ def post_car(request):
         form = CarForm()
 
     return render(request, 'post_car.html', {'form': form})
+
+def display_data(request):
+    if request.user.is_authenticated == False or not request.user.isadmin:
+        context = {
+                    'user_id': 'N/A',
+                    'user_name': 'Guest',
+                    'user_email': 'N/A',
+                    'is_authenticated': False,
+                }
+        return render(request, 'admin_only.html', context)
+
+    users = User.objects.all()
+    cars = Car.objects.all()
+    auctions = Auction.objects.all()
+    biddings = Bidding.objects.all()
+    context = {
+        'users': users,
+        'cars': cars,
+        'auctions': auctions,
+        'biddings': biddings,
+    }
+
+    return render(request, 'admin_page.html', context)

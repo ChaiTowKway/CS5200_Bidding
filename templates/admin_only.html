@@ -1,0 +1,18 @@
+<head>
+    <title>Admin Only</title>
+  </head>
+  <body>
+    {% block content %} {% if is_authenticated %}
+    <h1>ID: {{ user_id }}</h1>
+    <h1>NAME: {{ user_name }}</h1>
+    <h1>Email: {{ user_email }}</h1>
+    <!-- Logout Link -->
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <h1>Only Admin is allowed to access this page!</h1>
+    <!-- Login Button -->
+    <a href="/login">Login</a>
+    <!-- Adjust 'login' based on your login URL name -->
+    {% endif %} {% include './chatbot/chat.html' %} {% endblock %}
+  </body>
+</html>

@@ -72,6 +72,9 @@
           <li>
             <a>Welcome, {{ user.name }}!</a>
           </li>
+          {% if user.isadmin %}
+            <li><a href="admin_page">Admin Page</a></li>
+          {% endif %}
           <li><a href="post_car">Post New Car</a></li>
           <li>
             <a href="logout"
